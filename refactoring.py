@@ -1,6 +1,7 @@
 # from Roteiro3 import *
 from grafo import Grafo
 
+
 def remove_false_connections(graph, array):
     for x in range(len(array) - 2, 0, -2):
         edge = graph.A[array[x]].split('-')
@@ -12,11 +13,11 @@ def remove_false_connections(graph, array):
 
 
 def get_cycle(graph, array):
-    for i in range(len(array)):
-        rest = array[i + 1: len(array)]
+    for position in range(len(array)):
+        arrayWithAllVertexesExceptFirstRoot = array[position + 1: len(array)]
 
-        if array[i] in rest:
-            return remove_false_connections(graph, [array[i]] + [j for j in rest if j != array[i]] + [array[i]])
+        if array[position] in arrayWithAllVertexesExceptFirstRoot:
+            return remove_false_connections(graph, [array[position]] + [j for j in arrayWithAllVertexesExceptFirstRoot if j != array[position]] + [array[position]])
 
 def find_cycle(graph, root, visited=None, backtrack=None):
     if root not in graph.N:
