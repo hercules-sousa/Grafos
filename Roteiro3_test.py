@@ -1,9 +1,9 @@
 import unittest
-from Questions import *
+from Roteiro3 import *
 from grafo import Grafo
 
 
-class TestCycle(unittest.TestCase):
+class Roteiro3(unittest.TestCase):
 
     def setUp(self):
         self.GP = Grafo(list('JCEPMTZ'), {'1': 'J-C', '2': 'C-E', '3': 'C-E', '4': 'C-P', '5': 'C-P', '6': 'C-M',

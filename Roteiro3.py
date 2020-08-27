@@ -29,29 +29,29 @@ def find_cycle(graph, root, visited=None, backtrack=None):
     if root not in visited:
         visited.append(root)
 
-    for i in graph.A.keys():
-        if i not in visited:
-            value = graph.A[i].split('-')
-
-            if value[0] == root and value[-1] in visited:
-                visited.append(i), visited.append(value[-1])
+    for edgeId in graph.A.keys():
+        if edgeId not in visited:
+            firstVertex = graph.A[edgeId].split('-')[0]
+            secondVertex = graph.A[edgeId].split('-')[-1]
+            if firstVertex == root and secondVertex in visited:
+                visited.append(edgeId), visited.append(secondVertex)
                 return get_cycle(graph, visited)
-            elif value[-1] == root and value[0] in visited:
-                visited.append(i), visited.append(value[0])
+            elif secondVertex == root and firstVertex in visited:
+                visited.append(edgeId), visited.append(firstVertex)
                 return get_cycle(graph, visited)
 
-    for i in graph.A.keys():
-        if i not in visited:
-            value = graph.A[i].split('-')
-
-            if value[0] == root and value[-1] not in visited:
-                visited.append(i)
+    for edgeId in graph.A.keys():
+        if edgeId not in visited:
+            firstVertex = graph.A[edgeId].split('-')[0]
+            secondVertex = graph.A[edgeId].split('-')[-1]
+            if firstVertex == root and secondVertex not in visited:
+                visited.append(edgeId)
                 backtrack.append(root)
-                return find_cycle(graph, value[-1], visited, backtrack)
-            elif value[-1] == root and value[0] not in visited:
-                visited.append(i)
+                return find_cycle(graph, secondVertex, visited, backtrack)
+            elif secondVertex == root and firstVertex not in visited:
+                visited.append(edgeId)
                 backtrack.append(root)
-                return find_cycle(graph, value[0], visited, backtrack)
+                return find_cycle(graph, firstVertex, visited, backtrack)
 
     if len(backtrack) > 0:
         return find_cycle(graph, backtrack.pop(), visited, backtrack)
