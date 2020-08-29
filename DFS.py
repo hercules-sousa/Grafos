@@ -1,67 +1,41 @@
-def getConnectionsDict(graph):
-    conexionsDict = dict()
-
-    for vertex in graph.N:
-        connected = list()
-
-        for edge in graph.A.values():
-            firstVertexOfEdge = edge.split('-')[0]
-            secondVertexOfEdge = edge.split('-')[-1]
-            if vertex == firstVertexOfEdge:
-                connected.append(secondVertexOfEdge)
-            elif vertex == secondVertexOfEdge:
-                connected.append(firstVertexOfEdge)
-
-        conexionsDict[vertex] = connected[:]
-
-    return conexionsDict
+# Dupla: Matheus Alves da Silva; Hércules de Sousa Silva
 
 
 def dfs(graph, root):
     if root not in graph.N or len(graph.N) == 0:
         return list()
 
-    conexionsDict = getConnectionsDict(graph)
+    new = dict()
 
-    return dfs_search(conexionsDict, root, graph.A)
+    for i in graph.N:
+        connected = list()
 
+        for j in graph.A.values():
+            if i == j.split('-')[0]:
+                connected.append(j.split('-')[-1])
+            elif i == j.split('-')[-1]:
+                connected.append(j.split('-')[0])
 
-def generateListOfUnvisitedVetexes(visited, vertexesConnectedWithRoot):
-    unvisitedVertexes = []
-    for vertex in vertexesConnectedWithRoot:
-        if vertex not in visited:
-            unvisitedVertexes.append(vertex)
-    return unvisitedVertexes
+        new[i] = connected[:]
 
-
-def isEdgeId(element, edges):
-    if element in edges:
-        return True
-    return False
+    return dfs_search(new, root, graph.A)
 
 
-def dfs_search(conexionsDict, root, edges, visited=None):
+def dfs_search(graph, root, edges, visited=None):
     if visited is None:
         visited = list()
 
     if root not in visited:
         visited.append(root)
 
-    unvisitedVertexes = generateListOfUnvisitedVetexes(visited, conexionsDict[root])
+    for vertex in [x for x in graph[root] if x not in visited]:
+        for i, j in edges.items():
+            if i not in visited and visited[-1] not in edges and vertex not in visited:
+                if j.split('-')[0] == root and j.split('-')[-1] == vertex:
+                    visited.append(i)
+                elif j.split('-')[-1] == root and j.split('-')[0] == vertex:
+                    visited.append(i)
 
-    for vertexStillToVisit in unvisitedVertexes:
-        for edgeId, edge in edges.items():
-            if edgeId not in visited and vertexStillToVisit not in visited:
-                lastElementInVisited = visited[-1]
-                edgesIdList = edges.keys()
-                if not isEdgeId(lastElementInVisited, edgesIdList):
-                    firstVertexOfEdge = edge.split('-')[0]
-                    secondVertexOfEdge = edge.split('-')[-1]
-                    if firstVertexOfEdge == root and secondVertexOfEdge == vertexStillToVisit:
-                        visited.append(edgeId)
-                    elif secondVertexOfEdge == root and firstVertexOfEdge == vertexStillToVisit:
-                        visited.append(edgeId)
-
-        dfs_search(conexionsDict, vertexStillToVisit, edges, visited)
+        dfs_search(graph, vertex, edges, visited)
 
     return visited

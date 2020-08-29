@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="959166c9-a2a3-422c-86ac-251285514168" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Roteiro3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Roteiro3.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ggGukqUhoiup1NGVm25G2h2Kb8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="Python tests.Unittests for Roteiro3_test.Roteiro3">
+    <configuration name="refactoring" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Grafos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/refactoring.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Roteiro3_test.Roteiro3" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Grafos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Roteiro3_test.Roteiro3&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Roteiro3_test.Roteiro3.test_caminho" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Grafos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Roteiro3_test.Roteiro3.test_caminho&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Roteiro3_test.Roteiro3.test_conexo" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Grafos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Roteiro3_test.Roteiro3.test_conexo&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Roteiro3_test.Roteiro3.test_ha_ciclo" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Grafos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Roteiro3_test.Roteiro3.test_ha_ciclo&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Unittests for Roteiro3_test.Roteiro3" />
+        <item itemvalue="Python tests.Unittests for Roteiro3_test.Roteiro3.test_conexo" />
+        <item itemvalue="Python tests.Unittests for Roteiro3_test.Roteiro3.test_caminho" />
+        <item itemvalue="Python.refactoring" />
+        <item itemvalue="Python tests.Unittests for Roteiro3_test.Roteiro3.test_ha_ciclo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="959166c9-a2a3-422c-86ac-251285514168" name="Default Changelist" comment="" />
+      <created>1598529046795</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598529046795</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="refactoring" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="refactoring" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl" timestamp="1598717337231">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1598717337231" />
+    <state width="1276" height="65" key="GridCell.Tab.0.bottom" timestamp="1598718799445">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1598718799445" />
+    <state width="1276" height="65" key="GridCell.Tab.0.center" timestamp="1598718799438">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1598718799438" />
+    <state width="1276" height="65" key="GridCell.Tab.0.left" timestamp="1598718799438">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1598718799438" />
+    <state width="1276" height="65" key="GridCell.Tab.0.right" timestamp="1598718799438">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1598718799438" />
+    <state width="1276" height="65" key="GridCell.Tab.1.bottom" timestamp="1598718799456">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.1.bottom/67.27.1299.741@67.27.1299.741" timestamp="1598718799456" />
+    <state width="1276" height="65" key="GridCell.Tab.1.center" timestamp="1598718799455">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.1.center/67.27.1299.741@67.27.1299.741" timestamp="1598718799455" />
+    <state width="1276" height="65" key="GridCell.Tab.1.left" timestamp="1598718799455">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.1.left/67.27.1299.741@67.27.1299.741" timestamp="1598718799455" />
+    <state width="1276" height="65" key="GridCell.Tab.1.right" timestamp="1598718799456">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1276" height="65" key="GridCell.Tab.1.right/67.27.1299.741@67.27.1299.741" timestamp="1598718799456" />
+  </component>
+</project>
