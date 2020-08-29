@@ -3,21 +3,32 @@ from grafo import Grafo
 
 
 def remove_false_connections(graph, array):
-    for x in range(len(array) - 2, 0, -2):
-        edge = graph.A[array[x]].split('-')
-
-        if edge[0] != array[x - 1] and edge[-1] != array[x - 1]:
-            return [array[-1]] + array[x: len(array)]
+    for position in range(len(array) - 2, 0, -2):
+        edge = graph.A[array[position]].split('-')
+        firstVertex = edge[0]
+        secondVertex = edge[-1]
+        if firstVertex != array[position - 1] and secondVertex != array[position - 1]:
+            return [array[-1]] + array[position: len(array)]
 
     return array
 
 
-def get_cycle(graph, array):
-    for position in range(len(array)):
-        arrayWithAllVertexesExceptFirstRoot = array[position + 1: len(array)]
+def dunnoWhatCallIt(possibleCycleArray, position, possibleCycleArrayWithAllVertexesExceptFirstRoot):
+    genericList = list()
+    for element in possibleCycleArrayWithAllVertexesExceptFirstRoot:
+        if element != possibleCycleArray[position]:
+            genericList.append(element)
+    return [possibleCycleArray[position]] + genericList + [possibleCycleArray[position]]
 
-        if array[position] in arrayWithAllVertexesExceptFirstRoot:
-            return remove_false_connections(graph, [array[position]] + [j for j in arrayWithAllVertexesExceptFirstRoot if j != array[position]] + [array[position]])
+
+
+def get_cycle(graph, possibleCycleArray):
+    for position in range(len(possibleCycleArray)):
+        possibleCycleArrayWithAllVertexesExceptFirstRoot = possibleCycleArray[position + 1: len(possibleCycleArray)]
+
+        if possibleCycleArray[position] in possibleCycleArrayWithAllVertexesExceptFirstRoot:
+            return remove_false_connections(graph, dunnoWhatCallIt(possibleCycleArray, position, possibleCycleArrayWithAllVertexesExceptFirstRoot))
+
 
 def find_cycle(graph, root, visited=None, backtrack=None):
     if root not in graph.N:

@@ -1,6 +1,6 @@
-def get_cycle(graph, array):
-    for position in range(len(array)):
-        arrayWithAllVertexesExceptFirstRoot = array[position + 1: len(array)]
+def get_cycle(graph, possibleCycleArray):
+    for position in range(len(possibleCycleArray)):
+        possibleCycleArrayWithAllVertexesExceptFirstRoot = possibleCycleArray[position + 1: len(possibleCycleArray)]
 
-        if array[position] in arrayWithAllVertexesExceptFirstRoot:
-            return remove_false_connections(graph, [array[position]] + [j for j in arrayWithAllVertexesExceptFirstRoot if j != array[position]] + [array[position]])
+        if possibleCycleArray[position] in possibleCycleArrayWithAllVertexesExceptFirstRoot:
+            return remove_false_connections(graph, [possibleCycleArray[position]] + [j for j in possibleCycleArrayWithAllVertexesExceptFirstRoot if j != possibleCycleArray[position]] + [possibleCycleArray[position]])
