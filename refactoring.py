@@ -1,13 +1,11 @@
 # from Roteiro3 import *
 from grafo import Grafo
-
-
 from DFS import getConnectionsDict
 
+
 def neighbors(graph, root):
-    result = list()
     connectionsDict = getConnectionsDict(graph)
-    rootNeighbors = getConnectionsDict(graph)[root]
+    rootNeighbors = connectionsDict[root]
     return rootNeighbors
 
 
