@@ -83,8 +83,6 @@ def ha_ciclo(graph):
     if len(graph.N) == 0:
         return False
 
-    cycle = None
-
     for vertex in graph.N:
         cycle = get_array_of_walk(graph, vertex)
 
@@ -94,10 +92,9 @@ def ha_ciclo(graph):
     return False
 
 
-def getRootNeighbors(graph, root):
-    result = list()
+def neighbors(graph, root):
     connectionsDict = getConnectionsDict(graph)
-    rootNeighbors = getConnectionsDict(graph)[root]
+    rootNeighbors = connectionsDict[root]
     return rootNeighbors
 
 
@@ -135,7 +132,7 @@ def root_paths(graph, root, size, ex=None):
     if size == 0:
         return [[root]]
 
-    paths = [[root] + way for x in getRootNeighbors(graph, root) if x not in ex for way in root_paths(graph, x, size - 1, ex)]
+    paths = [[root] + way for x in neighbors(graph, root) if x not in ex for way in root_paths(graph, x, size - 1, ex)]
 
     ex.remove(root)
 
