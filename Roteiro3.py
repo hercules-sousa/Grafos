@@ -16,28 +16,29 @@ def remove_false_connections(graph, array):
     return array
 
 
-def dunnoWhatCallIt(possibleCycleArray, position, possibleCycleArrayWithAllVertexesExceptFirstRoot):
-    genericList = list()
+def generate_cycle_array(root, possibleCycleArrayWithAllVertexesExceptFirstRoot):
+    cycleArray = list()
     for element in possibleCycleArrayWithAllVertexesExceptFirstRoot:
-        if element != possibleCycleArray[position]:
-            genericList.append(element)
-    return [possibleCycleArray[position]] + genericList + [possibleCycleArray[position]]
+        if element != root:
+            cycleArray.append(element)
+    return [root] + cycleArray + [root]
 
 
-def get_cycle(graph, possibleCycleArray):
+
+def check_whether_there_is_cycle(graph, possibleCycleArray):
     for position in range(len(possibleCycleArray)):
         possibleCycleArrayWithAllVertexesExceptFirstRoot = possibleCycleArray[position + 1: len(possibleCycleArray)]
 
         if possibleCycleArray[position] in possibleCycleArrayWithAllVertexesExceptFirstRoot:
+            root = possibleCycleArray[position]
             return remove_false_connections(graph,
-                                            dunnoWhatCallIt(
-                                                possibleCycleArray,
-                                                position,
-                                                possibleCycleArrayWithAllVertexesExceptFirstRoot)
-                                            )
+                                            generate_cycle_array(
+                                                root,
+                                                possibleCycleArrayWithAllVertexesExceptFirstRoot
+                                            ))
 
 
-def find_cycle(graph, root, visited=None, backtrack=None):
+def get_array_of_walk(graph, root, visited=None, backtrack=None):
     if root not in graph.N:
         return False
 
@@ -53,10 +54,10 @@ def find_cycle(graph, root, visited=None, backtrack=None):
             secondVertex = graph.A[edgeId].split('-')[-1]
             if firstVertex == root and secondVertex in visited:
                 visited.append(edgeId), visited.append(secondVertex)
-                return get_cycle(graph, visited)
+                return check_whether_there_is_cycle(graph, visited)
             elif secondVertex == root and firstVertex in visited:
                 visited.append(edgeId), visited.append(firstVertex)
-                return get_cycle(graph, visited)
+                return check_whether_there_is_cycle(graph, visited)
 
     for edgeId in graph.A.keys():
         if edgeId not in visited:
@@ -65,14 +66,14 @@ def find_cycle(graph, root, visited=None, backtrack=None):
             if firstVertex == root and secondVertex not in visited:
                 visited.append(edgeId)
                 backtrack.append(root)
-                return find_cycle(graph, secondVertex, visited, backtrack)
+                return get_array_of_walk(graph, secondVertex, visited, backtrack)
             elif secondVertex == root and firstVertex not in visited:
                 visited.append(edgeId)
                 backtrack.append(root)
-                return find_cycle(graph, firstVertex, visited, backtrack)
+                return get_array_of_walk(graph, firstVertex, visited, backtrack)
 
     if len(backtrack) > 0:
-        return find_cycle(graph, backtrack.pop(), visited, backtrack)
+        return get_array_of_walk(graph, backtrack.pop(), visited, backtrack)
     else:
         return False
 
@@ -84,7 +85,7 @@ def ha_ciclo(graph):
     cycle = None
 
     for vertex in graph.N:
-        cycle = find_cycle(graph, vertex)
+        cycle = get_array_of_walk(graph, vertex)
 
         if cycle:
             return cycle
