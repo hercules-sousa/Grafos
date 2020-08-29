@@ -2,91 +2,75 @@
 from grafo import Grafo
 
 
-def remove_false_connections(graph, array):
-    for position in range(len(array) - 2, 0, -2):
-        edge = graph.A[array[position]].split('-')
-        firstVertex = edge[0]
-        secondVertex = edge[-1]
-        if firstVertex != array[position - 1] and secondVertex != array[position - 1]:
-            return [array[-1]] + array[position: len(array)]
+from DFS import getConnectionsDict
 
-    return array
+def neighbors(graph, root):
+    result = list()
+    connectionsDict = getConnectionsDict(graph)
+    rootNeighbors = getConnectionsDict(graph)[root]
+    return rootNeighbors
 
 
-def generate_cycle_array(root, possibleCycleArrayWithAllVertexesExceptFirstRoot):
-    cycleArray = list()
-    for element in possibleCycleArrayWithAllVertexesExceptFirstRoot:
-        if element != root:
-            cycleArray.append(element)
-    return [root] + cycleArray + [root]
+def get_edges(graph, array):
+    result = list()
+
+    for x in range(len(array)):
+        current = list()
+
+        for i in range(len(array[x])):
+            current.append(array[x][i])
+
+            if i < len(array[x]) - 1:
+                for j in graph.A.keys():
+                    value = graph.A[j].split('-')
+
+                    if value[0] == array[x][i] and value[-1] == array[x][i + 1]:
+                        current.append(j)
+                        break
+                    if value[0] == array[x][i + 1] and value[-1] == array[x][i]:
+                        current.append(j)
+                        break
+
+        result.append(current)
+
+    return result
 
 
-
-def check_whether_there_is_cycle(graph, possibleCycleArray):
-    for position in range(len(possibleCycleArray)):
-        possibleCycleArrayWithAllVertexesExceptFirstRoot = possibleCycleArray[position + 1: len(possibleCycleArray)]
-
-        if possibleCycleArray[position] in possibleCycleArrayWithAllVertexesExceptFirstRoot:
-            root = possibleCycleArray[position]
-            return remove_false_connections(graph, generate_cycle_array(root, possibleCycleArrayWithAllVertexesExceptFirstRoot))
-
-
-def get_array_of_walk(graph, root, visited=None, backtrack=None):
-    if root not in graph.N:
-        return False
-
-    if visited is None:
-        visited, backtrack = list(), list()
-
-    if root not in visited:
-        visited.append(root)
-
-    for edgeId in graph.A.keys():
-        if edgeId not in visited:
-            firstVertex = graph.A[edgeId].split('-')[0]
-            secondVertex = graph.A[edgeId].split('-')[-1]
-            if firstVertex == root and secondVertex in visited:
-                visited.append(edgeId), visited.append(secondVertex)
-                return check_whether_there_is_cycle(graph, visited)
-            elif secondVertex == root and firstVertex in visited:
-                visited.append(edgeId), visited.append(firstVertex)
-                return check_whether_there_is_cycle(graph, visited)
-
-    for edgeId in graph.A.keys():
-        if edgeId not in visited:
-            firstVertex = graph.A[edgeId].split('-')[0]
-            secondVertex = graph.A[edgeId].split('-')[-1]
-            if firstVertex == root and secondVertex not in visited:
-                visited.append(edgeId)
-                backtrack.append(root)
-                return get_array_of_walk(graph, secondVertex, visited, backtrack)
-            elif secondVertex == root and firstVertex not in visited:
-                visited.append(edgeId)
-                backtrack.append(root)
-                return get_array_of_walk(graph, firstVertex, visited, backtrack)
-
-    if len(backtrack) > 0:
-        return get_array_of_walk(graph, backtrack.pop(), visited, backtrack)
+def root_paths(graph, root, size, ex=None):
+    if ex is None:
+        ex = {root}
     else:
-        return False
+        ex.add(root)
+
+    if size == 0:
+        return [[root]]
+
+    paths = [[root] + way for x in neighbors(graph, root) if x not in ex for way in root_paths(graph, x, size - 1, ex)]
+
+    ex.remove(root)
+
+    return paths
 
 
-def ha_ciclo(graph):
-    if len(graph.N) == 0:
-        return False
+def caminho(graph, length):
+    if length >= len(graph.N):
+        return list()
 
-    cycle = None
+    result = list()
 
-    for vertex in graph.N:
-        cycle = get_array_of_walk(graph, vertex)
+    for root in graph.N:
+        try:
+            result = get_edges(graph, root_paths(graph, root, length))[0]
 
-        if cycle:
-            return cycle
+            if len(result) == length * 2 + 1:
+                return result
+        except IndexError:
+            pass
 
-    return False
+    return result
 
 
 grafo1 = Grafo(list("ABCDE"), {"1": "A-B", "2": "B-C", "3": "C-D", "4": "D-E", "5": "E-C"})
 
 
-print(ha_ciclo(grafo1))
+print(caminho(grafo1, 4))

@@ -1,8 +1,9 @@
 # Alunos: Matheus Alves da Silva e Hércules de Sousa Silva
 
-
 # from Roteiro3 import *
 from grafo import Grafo
+
+from DFS import getConnectionsDict
 
 
 def remove_false_connections(graph, array):
@@ -93,18 +94,11 @@ def ha_ciclo(graph):
     return False
 
 
-def neighbors(graph, root):
+def getRootNeighbors(graph, root):
     result = list()
-
-    for i in graph.A.keys():
-        value = graph.A[i].split('-')
-
-        if value[0] == root:
-            result.append(value[-1])
-        elif value[-1] == root:
-            result.append(value[0])
-
-    return result
+    connectionsDict = getConnectionsDict(graph)
+    rootNeighbors = getConnectionsDict(graph)[root]
+    return rootNeighbors
 
 
 def get_edges(graph, array):
@@ -141,7 +135,7 @@ def root_paths(graph, root, size, ex=None):
     if size == 0:
         return [[root]]
 
-    paths = [[root] + way for x in neighbors(graph, root) if x not in ex for way in root_paths(graph, x, size - 1, ex)]
+    paths = [[root] + way for x in getRootNeighbors(graph, root) if x not in ex for way in root_paths(graph, x, size - 1, ex)]
 
     ex.remove(root)
 
