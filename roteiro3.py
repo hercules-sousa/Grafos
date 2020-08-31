@@ -3,7 +3,7 @@
 # from Roteiro3 import *
 from grafo import Grafo
 
-from DFS import getConnectionsDict
+from roteiro2 import getConnectionsDict
 
 
 def remove_false_connections(graph, array):
@@ -25,56 +25,54 @@ def generate_cycle_array(root, possibleCycleArrayWithAllVertexesExceptFirstRoot)
     return [root] + cycleArray + [root]
 
 
-
-def check_whether_there_is_cycle(graph, possibleCycleArray):
+def check_whether_there_is_cycle_in_possible_cycle_array(graph, possibleCycleArray):
     for position in range(len(possibleCycleArray)):
         possibleCycleArrayWithAllVertexesExceptFirstRoot = possibleCycleArray[position + 1: len(possibleCycleArray)]
 
         if possibleCycleArray[position] in possibleCycleArrayWithAllVertexesExceptFirstRoot:
             root = possibleCycleArray[position]
-            return remove_false_connections(graph,
-                                            generate_cycle_array(
-                                                root,
-                                                possibleCycleArrayWithAllVertexesExceptFirstRoot
-                                            ))
+            cycle = generate_cycle_array(root, possibleCycleArrayWithAllVertexesExceptFirstRoot)
+            return remove_false_connections(graph, cycle)
 
 
-def get_array_of_walk(graph, root, visited=None, backtrack=None):
+def get_array_of_possible_cycle(graph, root, possibleCycleArray=None, backtrack=None):
     if root not in graph.N:
         return False
 
-    if visited is None:
-        visited, backtrack = list(), list()
+    if possibleCycleArray is None:
+        possibleCycleArray, backtrack = list(), list()
 
-    if root not in visited:
-        visited.append(root)
-
-    for edgeId in graph.A.keys():
-        if edgeId not in visited:
-            firstVertex = graph.A[edgeId].split('-')[0]
-            secondVertex = graph.A[edgeId].split('-')[-1]
-            if firstVertex == root and secondVertex in visited:
-                visited.append(edgeId), visited.append(secondVertex)
-                return check_whether_there_is_cycle(graph, visited)
-            elif secondVertex == root and firstVertex in visited:
-                visited.append(edgeId), visited.append(firstVertex)
-                return check_whether_there_is_cycle(graph, visited)
+    if root not in possibleCycleArray:
+        possibleCycleArray.append(root)
 
     for edgeId in graph.A.keys():
-        if edgeId not in visited:
+        if edgeId not in possibleCycleArray:
             firstVertex = graph.A[edgeId].split('-')[0]
             secondVertex = graph.A[edgeId].split('-')[-1]
-            if firstVertex == root and secondVertex not in visited:
-                visited.append(edgeId)
+            if firstVertex == root and secondVertex in possibleCycleArray:
+                possibleCycleArray.append(edgeId)
+                possibleCycleArray.append(secondVertex)
+                return check_whether_there_is_cycle_in_possible_cycle_array(graph, possibleCycleArray)
+            elif secondVertex == root and firstVertex in possibleCycleArray:
+                possibleCycleArray.append(edgeId)
+                possibleCycleArray.append(firstVertex)
+                return check_whether_there_is_cycle_in_possible_cycle_array(graph, possibleCycleArray)
+
+    for edgeId in graph.A.keys():
+        if edgeId not in possibleCycleArray:
+            firstVertex = graph.A[edgeId].split('-')[0]
+            secondVertex = graph.A[edgeId].split('-')[-1]
+            if firstVertex == root and secondVertex not in possibleCycleArray:
+                possibleCycleArray.append(edgeId)
                 backtrack.append(root)
-                return get_array_of_walk(graph, secondVertex, visited, backtrack)
-            elif secondVertex == root and firstVertex not in visited:
-                visited.append(edgeId)
+                return get_array_of_possible_cycle(graph, secondVertex, possibleCycleArray, backtrack)
+            elif secondVertex == root and firstVertex not in possibleCycleArray:
+                possibleCycleArray.append(edgeId)
                 backtrack.append(root)
-                return get_array_of_walk(graph, firstVertex, visited, backtrack)
+                return get_array_of_possible_cycle(graph, firstVertex, possibleCycleArray, backtrack)
 
     if len(backtrack) > 0:
-        return get_array_of_walk(graph, backtrack.pop(), visited, backtrack)
+        return get_array_of_possible_cycle(graph, backtrack.pop(), possibleCycleArray, backtrack)
     else:
         return False
 
@@ -84,7 +82,7 @@ def ha_ciclo(graph):
         return False
 
     for vertex in graph.N:
-        cycle = get_array_of_walk(graph, vertex)
+        cycle = get_array_of_possible_cycle(graph, vertex)
 
         if cycle:
             return cycle
@@ -140,7 +138,7 @@ def root_paths(graph, root, size, ex=None):
 
 
 def caminho(graph, length):
-    if length >= len(graph.N):
+    if length > len(graph.A):
         return list()
 
     result = list()

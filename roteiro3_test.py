@@ -1,5 +1,5 @@
 import unittest
-from Roteiro3 import *
+from roteiro3 import *
 from grafo import Grafo
 
 

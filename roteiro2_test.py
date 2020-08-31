@@ -2,7 +2,7 @@
 
 import unittest
 from grafo import Grafo
-from DFS import dfs
+from roteiro2 import dfs
 
 
 class TestDFS(unittest.TestCase):
