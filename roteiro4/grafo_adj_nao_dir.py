@@ -3,14 +3,16 @@
 class VerticeInvalidoException(Exception):
     pass
 
+
 class ArestaInvalidaException(Exception):
     pass
+
 
 class MatrizInvalidaException(Exception):
     pass
 
-class Grafo:
 
+class Grafo:
     QTDE_MAX_SEPARADOR = 1
     SEPARADOR_ARESTA = '-'
     __maior_vertice = 0
@@ -29,7 +31,7 @@ class Grafo:
             M = list()
 
         for v in V:
-            if not(Grafo.verticeValido(v)):
+            if not (Grafo.verticeValido(v)):
                 raise VerticeInvalidoException('O vértice ' + v + ' é inválido')
             if len(v) > self.__maior_vertice:
                 self.__maior_vertice = len(v)
@@ -40,11 +42,10 @@ class Grafo:
             for k in range(len(V)):
                 M.append(list())
                 for l in range(len(V)):
-                    if k>l:
+                    if k > l:
                         M[k].append('-')
                     else:
                         M[k].append(0)
-
 
         if len(M) != len(V):
             raise MatrizInvalidaException('A matriz passada como parâmetro não tem o tamanho correto')
@@ -59,12 +60,11 @@ class Grafo:
                 Verifica se os índices passados como parâmetro representam um elemento da matriz abaixo da diagonal principal.
                 Além disso, verifica se o referido elemento é um traço "-". Isso indica que a matriz é não direcionada e foi construída corretamente.
                 '''
-                if i>j and not(M[i][j] == '-'):
+                if i > j and not (M[i][j] == '-'):
                     raise MatrizInvalidaException('A matriz não representa uma matriz não direcionada')
 
-
                 aresta = V[i] + Grafo.SEPARADOR_ARESTA + V[j]
-                if not(self.arestaValida(aresta)):
+                if not (self.arestaValida(aresta)):
                     raise ArestaInvalidaException('A aresta ' + aresta + ' é inválida')
 
         self.M = list(M)
@@ -92,7 +92,7 @@ class Grafo:
         if i_traco == 0 or aresta[-1] == Grafo.SEPARADOR_ARESTA:
             return False
 
-        if not(self.existeVertice(aresta[:i_traco])) or not(self.existeVertice(aresta[i_traco+1:])):
+        if not (self.existeVertice(aresta[:i_traco])) or not (self.existeVertice(aresta[i_traco + 1:])):
             return False
 
         return True
@@ -129,7 +129,7 @@ class Grafo:
         :param a: A aresta a ser analisada
         :return: O segundo vértice da aresta
         '''
-        return a[a.index(Grafo.SEPARADOR_ARESTA)+1:]
+        return a[a.index(Grafo.SEPARADOR_ARESTA) + 1:]
 
     def __indice_primeiro_vertice_aresta(self, a: str):
         '''
@@ -175,13 +175,13 @@ class Grafo:
             if len(v) > self.__maior_vertice:
                 self.__maior_vertice = len(v)
 
-            self.N.append(v) # Adiciona vértice na lista de vértices
-            self.M.append([]) # Adiciona a linha
+            self.N.append(v)  # Adiciona vértice na lista de vértices
+            self.M.append([])  # Adiciona a linha
 
             for k in range(len(self.N)):
-                if k != len(self.N) -1:
-                    self.M[k].append(0) # adiciona os elementos da coluna do vértice
-                    self.M[self.N.index(v)].append('-') # adiciona os elementos da linha do vértice
+                if k != len(self.N) - 1:
+                    self.M[k].append(0)  # adiciona os elementos da coluna do vértice
+                    self.M[self.N.index(v)].append('-')  # adiciona os elementos da linha do vértice
                 else:
                     self.M[self.N.index(v)].append(0)  # adiciona um zero no último elemento da linha
         else:
@@ -228,7 +228,7 @@ class Grafo:
         '''
 
         # Dá o espaçamento correto de acordo com o tamanho do string do maior vértice
-        espaco = ' '*(self.__maior_vertice)
+        espaco = ' ' * (self.__maior_vertice)
 
         grafo_str = espaco + ' '
 
@@ -246,12 +246,12 @@ class Grafo:
             grafo_str += '\n'
 
         return grafo_str
-    
+
     def vertices_nao_adjacentes(self):
         list_of_edges_not_adjacent = list()
 
         for line_counter in range(len(self.M)):
-            for column_counter in range(len(self.M)):
+            for column_counter in range(line_counter, len(self.M)):
                 vertex = self.M[line_counter][column_counter]
                 if vertex == 0:
                     edge_not_adjacent = str()
@@ -259,8 +259,7 @@ class Grafo:
                     list_of_edges_not_adjacent.append(edge_not_adjacent)
 
         return list_of_edges_not_adjacent
-    
-    
+
     def ha_laco(self):
         for position in range(len(self.N)):
             vertex = self.M[position][position]
@@ -268,7 +267,6 @@ class Grafo:
                 return True
         return False
 
-    
     def ha_paralelas(self):
         for line_counter in range(len(self.M)):
             for column_counter in range(line_counter, len(self.M)):
@@ -278,29 +276,28 @@ class Grafo:
 
         return False
 
+    def get_position_in_vertex_array(self, vertex):
+        for line_counter in range(len(self.N)):
+            if self.N[line_counter] == vertex:
+                return line_counter
 
+    def grau(self, vertex):
+        if vertex not in self.N:
+            raise VerticeInvalidoException('O vértice ' + vertex + ' é inválido')
 
+        position = self.get_position_in_vertex_array(vertex)
 
+        grau = 0
 
+        for element in self.M[position]:
+            if element != '-':
+                grau += int(element)
 
+        for line_counter in range(len(self.M)):
+            if line_counter != position:
+                element =  self.M[line_counter][position]
+                if element != '-':
+                    grau += int(element)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return grau
 
