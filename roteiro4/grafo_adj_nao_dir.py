@@ -247,13 +247,14 @@ class Grafo:
 
         return grafo_str
 
+
     def vertices_nao_adjacentes(self):
         list_of_edges_not_adjacent = list()
 
         for line_counter in range(len(self.M)):
             for column_counter in range(line_counter, len(self.M)):
-                vertex = self.M[line_counter][column_counter]
-                if vertex == 0:
+                connection = self.M[line_counter][column_counter]
+                if connection == 0:
                     edge_not_adjacent = str()
                     edge_not_adjacent += (self.N[line_counter] + "-" + self.N[column_counter])
                     list_of_edges_not_adjacent.append(edge_not_adjacent)
@@ -276,16 +277,11 @@ class Grafo:
 
         return False
 
-    def get_position_in_vertex_array(self, vertex):
-        for line_counter in range(len(self.N)):
-            if self.N[line_counter] == vertex:
-                return line_counter
-
     def grau(self, vertex):
         if vertex not in self.N:
             raise VerticeInvalidoException('O vértice ' + vertex + ' é inválido')
 
-        position = self.get_position_in_vertex_array(vertex)
+        position = self.N.index(vertex)
 
         grau = 0
 
@@ -295,32 +291,32 @@ class Grafo:
 
         for line_counter in range(len(self.M)):
             if line_counter != position:
-                element =  self.M[line_counter][position]
+                element = self.M[line_counter][position]
                 if element != '-':
                     grau += int(element)
 
         return grau
 
     def arestas_sobre_vertice(self, vertex):
-        position_of_vertex_in_array = self.get_position_in_vertex_array(vertex)
+        position_of_vertex_in_array = self.N.index(vertex)
 
-        list_of_edges = list()
+        list_of_edges = set()
 
         for element_counter in range(len(self.M[position_of_vertex_in_array])):
             if self.M[position_of_vertex_in_array][element_counter] != '-':
                 if self.M[position_of_vertex_in_array][element_counter] > 0:
                     other_vertex = self.N[element_counter]
-                    list_of_edges.append(f'{vertex}-{other_vertex}')
+                    list_of_edges.add(f'{vertex}-{other_vertex}')
 
         for line_counter in range(len(self.M)):
             if self.M[line_counter][position_of_vertex_in_array] != '-':
                 if self.M[line_counter][position_of_vertex_in_array] > 0:
                     first_vertex = self.N[line_counter]
-                    list_of_edges.append(f'{first_vertex}-{vertex}')
+                    list_of_edges.add(f'{first_vertex}-{vertex}')
             else:
                 break
 
-        return set(list_of_edges)
+        return list_of_edges
 
     def eh_completo(self):
         for line_counter in range(len(self.M)):
