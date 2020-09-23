@@ -301,3 +301,32 @@ class Grafo:
 
         return grau
 
+    def arestas_sobre_vertice(self, vertex):
+        position_of_vertex_in_array = self.get_position_in_vertex_array(vertex)
+
+        list_of_edges = list()
+
+        for element_counter in range(len(self.M[position_of_vertex_in_array])):
+            if self.M[position_of_vertex_in_array][element_counter] != '-':
+                if self.M[position_of_vertex_in_array][element_counter] > 0:
+                    other_vertex = self.N[element_counter]
+                    list_of_edges.append(f'{vertex}-{other_vertex}')
+
+        for line_counter in range(len(self.M)):
+            if self.M[line_counter][position_of_vertex_in_array] != '-':
+                if self.M[line_counter][position_of_vertex_in_array] > 0:
+                    first_vertex = self.N[line_counter]
+                    list_of_edges.append(f'{first_vertex}-{vertex}')
+            else:
+                break
+
+        return set(list_of_edges)
+
+    def eh_completo(self):
+        for line_counter in range(len(self.M)):
+            for column_counter in range(line_counter + 1, len(self.M)):
+                vertex = self.M[line_counter][column_counter]
+                if vertex == 0:
+                    return False
+
+        return True
