@@ -5,4 +5,4 @@ g.adicionaAresta('A-B')
 g.adicionaAresta('B-C')
 g.adicionaAresta('A-C')
 
-print(g)
+print(g.grau('B'))

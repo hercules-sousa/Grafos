@@ -43,7 +43,7 @@ class Grafo:
                 M.append(list())
                 for l in range(len(V)):
                     if k > l:
-                        M[k].append('-')
+                        M[k].append(self.SEPARADOR_ARESTA)
                     else:
                         M[k].append(0)
 
@@ -60,7 +60,7 @@ class Grafo:
                 Verifica se os índices passados como parâmetro representam um elemento da matriz abaixo da diagonal principal.
                 Além disso, verifica se o referido elemento é um traço "-". Isso indica que a matriz é não direcionada e foi construída corretamente.
                 '''
-                if i > j and not (M[i][j] == '-'):
+                if i > j and not (M[i][j] == self.SEPARADOR_ARESTA):
                     raise MatrizInvalidaException('A matriz não representa uma matriz não direcionada')
 
                 aresta = V[i] + Grafo.SEPARADOR_ARESTA + V[j]
@@ -181,7 +181,7 @@ class Grafo:
             for k in range(len(self.N)):
                 if k != len(self.N) - 1:
                     self.M[k].append(0)  # adiciona os elementos da coluna do vértice
-                    self.M[self.N.index(v)].append('-')  # adiciona os elementos da linha do vértice
+                    self.M[self.N.index(v)].append(self.SEPARADOR_ARESTA)  # adiciona os elementos da linha do vértice
                 else:
                     self.M[self.N.index(v)].append(0)  # adiciona um zero no último elemento da linha
         else:
@@ -256,7 +256,7 @@ class Grafo:
                 connection = self.M[line_counter][column_counter]
                 if connection == 0:
                     edge_not_adjacent = str()
-                    edge_not_adjacent += (self.N[line_counter] + "-" + self.N[column_counter])
+                    edge_not_adjacent += (self.N[line_counter] + self.SEPARADOR_ARESTA + self.N[column_counter])
                     list_of_edges_not_adjacent.append(edge_not_adjacent)
 
         return list_of_edges_not_adjacent
@@ -285,15 +285,21 @@ class Grafo:
 
         grau = 0
 
+        '''
         for element in self.M[position]:
-            if element != '-':
+            if element != self.SEPARADOR_ARESTA:
                 grau += int(element)
+        '''
 
         for line_counter in range(len(self.M)):
             if line_counter != position:
                 element = self.M[line_counter][position]
-                if element != '-':
+                if element != self.SEPARADOR_ARESTA:
                     grau += int(element)
+                else:
+                    break
+            else:
+                grau += sum(self.M[line_counter][line_counter:])
 
         return grau
 
@@ -303,13 +309,13 @@ class Grafo:
         list_of_edges = set()
 
         for element_counter in range(len(self.M[position_of_vertex_in_array])):
-            if self.M[position_of_vertex_in_array][element_counter] != '-':
+            if self.M[position_of_vertex_in_array][element_counter] != self.SEPARADOR_ARESTA:
                 if self.M[position_of_vertex_in_array][element_counter] > 0:
                     other_vertex = self.N[element_counter]
                     list_of_edges.add(f'{vertex}-{other_vertex}')
 
         for line_counter in range(len(self.M)):
-            if self.M[line_counter][position_of_vertex_in_array] != '-':
+            if self.M[line_counter][position_of_vertex_in_array] != self.SEPARADOR_ARESTA:
                 if self.M[line_counter][position_of_vertex_in_array] > 0:
                     first_vertex = self.N[line_counter]
                     list_of_edges.add(f'{first_vertex}-{vertex}')
