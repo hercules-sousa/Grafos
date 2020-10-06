@@ -335,6 +335,8 @@ class Grafo:
         return True
 
     def há_caminho_euleriano(self):
+        if self.esta_vazia_matriz_de_adjacencia():
+            return -1
         qtd_impares = 0
         for vertice in self.N:
             grau_do_vertice = self.grau(vertice)
@@ -356,10 +358,21 @@ class Grafo:
             if len(vertices_impares) == 2:
                 return vertices_impares
 
-    def caminho_euleriano_para_dois_impares(self):
-        vertices_impares = self.encontrar_dupla_de_vertices_impares()
-        print(vertices_impares)
-        return "Realizando a busca para caminho com dois vértices ímpares"
+    def esta_vazia_matriz_de_adjacencia(self):
+        soma = 0
+        for line_counter in range(len(self.N)):
+            soma += sum(self.M[line_counter][line_counter:])
+            if soma > 0:
+                return False
+        return True
+
+    def caminho_euleriano_para_dois_impares(self, vertice, vertices_impares, caminho_euleriano=None):
+        if caminho_euleriano is None:
+            caminho_euleriano = list()
+        if self.esta_vazia_matriz_de_adjacencia():
+            return caminho_euleriano
+        else:
+            return "Realizando a busca para caminho com dois vértices ímpares"
 
     def caminho_euleriano_para_zero_impares(self):
         return "Realizando a busca para caminho com zero vértices ímpares"
@@ -370,6 +383,8 @@ class Grafo:
             return "Não há caminho euleriano"
 
         if qtd_impares == 2:
-            return self.caminho_euleriano_para_dois_impares()
+            vertices_impares = self.encontrar_dupla_de_vertices_impares()
+            primeirot_vertices_impar = vertices_impares[0]
+            return self.caminho_euleriano_para_dois_impares(primeirot_vertices_impar, vertices_impares)
         else:
             return self.caminho_euleriano_para_zero_impares()
