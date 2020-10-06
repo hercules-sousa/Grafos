@@ -380,7 +380,7 @@ class Grafo:
     def caminho_euleriano(self):
         qtd_impares = self.há_caminho_euleriano()
         if qtd_impares < 0:
-            return "Não há caminho euleriano"
+            return []
 
         if qtd_impares == 2:
             vertices_impares = self.encontrar_dupla_de_vertices_impares()
