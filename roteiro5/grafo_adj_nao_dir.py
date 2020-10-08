@@ -442,7 +442,7 @@ class Grafo:
                 segundo_vertice_impar = vertices_impares[-1]
                 caminho_euleriano_para_segundo_impar = self.caminho_euleriano_para_dois_impares(segundo_vertice_impar,
                                                                                                 vertices_impares,
-                                                                                                deepcopy(self.M[:]))
+                                                                                                deepcopy(self.M))
                 return caminho_euleriano_para_segundo_impar
             else:
                 return caminho_euleriano_para_primeiro_impar
