@@ -1,12 +1,12 @@
 # Dupla: Matheus Alves da Silva; Hércules de Sousa Silva
 
+
 import unittest
 from grafo import Grafo
-from DFS import dfs
+from roteiro2 import dfs
 
 
 class TestDFS(unittest.TestCase):
-
     def setUp(self):
         # Grafo da Paraíba
         self.GP = Grafo(list('JCEPMTZ'), {'1': 'J-C', '2': 'C-E', '3': 'C-E', '4': 'C-P', '5': 'C-P', '6': 'C-M',
