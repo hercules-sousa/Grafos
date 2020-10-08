@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from copy import deepcopy
+
+
 class VerticeInvalidoException(Exception):
     pass
 
@@ -9,6 +12,10 @@ class ArestaInvalidaException(Exception):
 
 
 class MatrizInvalidaException(Exception):
+    pass
+
+
+class ErroNoRetornoDeCaminhoEulerianoException(Exception):
     pass
 
 
@@ -335,7 +342,7 @@ class Grafo:
         return True
 
     def há_caminho_euleriano(self):
-        if self.esta_vazia_matriz_de_adjacencia():
+        if self.esta_vazia_matriz_de_adjacencia(self.M):
             return -1
         qtd_impares = 0
         for vertice in self.N:
@@ -358,10 +365,10 @@ class Grafo:
             if len(vertices_impares) == 2:
                 return vertices_impares
 
-    def esta_vazia_matriz_de_adjacencia(self):
+    def esta_vazia_matriz_de_adjacencia(self, matriz_adjacencia):
         soma = 0
-        for line_counter in range(len(self.N)):
-            soma += sum(self.M[line_counter][line_counter:])
+        for line_counter in range(len(matriz_adjacencia)):
+            soma += sum(matriz_adjacencia[line_counter][line_counter:])
             if soma > 0:
                 return False
         return True
@@ -369,28 +376,28 @@ class Grafo:
     def caminho_euleriano_para_dois_impares(self,
                                             vertice,
                                             vertices_impares,
-                                            caminho_euleriano=None,
-                                            numero_da_aresta=2):
+                                            copia_matriz_adjacencia,
+                                            numero_da_aresta=2,
+                                            caminho_euleriano=None):
         if caminho_euleriano is None:
             caminho_euleriano = list()
             caminho_euleriano.append(vertice)
             caminho_euleriano.append("a1")
-        if self.esta_vazia_matriz_de_adjacencia():
+        if self.esta_vazia_matriz_de_adjacencia(copia_matriz_adjacencia):
             caminho_euleriano = caminho_euleriano[:-1]
             if caminho_euleriano[0] == vertices_impares[0] and caminho_euleriano[-1] == vertices_impares[-1]:
                 return caminho_euleriano
             elif caminho_euleriano[0] == vertices_impares[-1] and caminho_euleriano[-1] == vertices_impares[0]:
                 return caminho_euleriano
             else:
-                return "Erro ao retornar o caminho"
-
+                raise ErroNoRetornoDeCaminhoEulerianoException
         else:
             posicao_vertice_na_lista = self.N.index(vertice)
-            for line_counter in range(len(self.N)):
+            for line_counter in range(len(copia_matriz_adjacencia)):
                 if line_counter == posicao_vertice_na_lista:
-                    for column_counter in range(line_counter, len(self.N)):
-                        if self.M[line_counter][column_counter] > 0:
-                            self.M[line_counter][column_counter] -= 1
+                    for column_counter in range(line_counter, len(copia_matriz_adjacencia)):
+                        if copia_matriz_adjacencia[line_counter][column_counter] > 0:
+                            copia_matriz_adjacencia[line_counter][column_counter] -= 1
                             novo_vertice = self.N[column_counter]
                             caminho_euleriano.append(novo_vertice)
                             caminho_euleriano.append(f"a{numero_da_aresta}")
@@ -398,12 +405,13 @@ class Grafo:
                             return self.caminho_euleriano_para_dois_impares(
                                 novo_vertice,
                                 vertices_impares,
-                                caminho_euleriano,
-                                numero_da_aresta)
+                                copia_matriz_adjacencia,
+                                numero_da_aresta,
+                                caminho_euleriano)
                 else:
-                    if self.M[line_counter][posicao_vertice_na_lista] != self.SEPARADOR_ARESTA:
-                        if self.M[line_counter][posicao_vertice_na_lista] > 0:
-                            self.M[line_counter][posicao_vertice_na_lista] -= 1
+                    if copia_matriz_adjacencia[line_counter][posicao_vertice_na_lista] != self.SEPARADOR_ARESTA:
+                        if copia_matriz_adjacencia[line_counter][posicao_vertice_na_lista] > 0:
+                            copia_matriz_adjacencia[line_counter][posicao_vertice_na_lista] -= 1
                             novo_vertice = self.N[line_counter]
                             caminho_euleriano.append(novo_vertice)
                             caminho_euleriano.append(f"a{numero_da_aresta}")
@@ -411,10 +419,10 @@ class Grafo:
                             return self.caminho_euleriano_para_dois_impares(
                                 novo_vertice,
                                 vertices_impares,
-                                caminho_euleriano,
-                                numero_da_aresta)
+                                copia_matriz_adjacencia,
+                                numero_da_aresta,
+                                caminho_euleriano)
             return None
-
 
     def caminho_euleriano_para_zero_impares(self):
         return "Realizando a busca para caminho com zero vértices ímpares"
@@ -426,7 +434,17 @@ class Grafo:
 
         if qtd_impares == 2:
             vertices_impares = self.encontrar_dupla_de_vertices_impares()
-            primeirot_vertices_impar = vertices_impares[0]
-            return self.caminho_euleriano_para_dois_impares(primeirot_vertices_impar, vertices_impares)
+            primeiro_vertices_impar = vertices_impares[0]
+            caminho_euleriano_para_primeiro_impar = self.caminho_euleriano_para_dois_impares(primeiro_vertices_impar,
+                                                                                             vertices_impares,
+                                                                                             deepcopy(self.M))
+            if caminho_euleriano_para_primeiro_impar is None:
+                segundo_vertice_impar = vertices_impares[-1]
+                caminho_euleriano_para_segundo_impar = self.caminho_euleriano_para_dois_impares(segundo_vertice_impar,
+                                                                                                vertices_impares,
+                                                                                                deepcopy(self.M[:]))
+                return caminho_euleriano_para_segundo_impar
+            else:
+                return caminho_euleriano_para_primeiro_impar
         else:
             return self.caminho_euleriano_para_zero_impares()
