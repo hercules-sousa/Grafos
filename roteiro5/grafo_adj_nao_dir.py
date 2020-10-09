@@ -382,11 +382,11 @@ class Grafo:
         return True
 
     def caminho_euleriano_entre_dois_vertices(self,
-                                            vertice,
-                                            vertices_impares,
-                                            copia_matriz_adjacencia,
-                                            numero_da_aresta=2,
-                                            caminho_euleriano=None):
+                                              vertice,
+                                              vertices_impares,
+                                              copia_matriz_adjacencia,
+                                              numero_da_aresta=2,
+                                              caminho_euleriano=None):
         if caminho_euleriano is None:
             caminho_euleriano = list()
             caminho_euleriano.append(vertice)
@@ -435,12 +435,12 @@ class Grafo:
             for j in range(i, len(self.N)):
                 lista_vertices_impares = [self.N[i], self.N[j]]
                 caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_vertices_impares[0],
-                                                                                     lista_vertices_impares,
-                                                                                     deepcopy(self.M))
+                                                                                       lista_vertices_impares,
+                                                                                       deepcopy(self.M))
                 if caminho_para_zero_impares is None:
                     caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_vertices_impares[-1],
-                                                                                         lista_vertices_impares,
-                                                                                         deepcopy(self.M))
+                                                                                           lista_vertices_impares,
+                                                                                           deepcopy(self.M))
                     if caminho_para_zero_impares is not None:
                         return caminho_para_zero_impares
                 else:
@@ -457,15 +457,47 @@ class Grafo:
             vertices_impares = self.encontrar_dupla_de_vertices_impares()
             primeiro_vertices_impar = vertices_impares[0]
             caminho_euleriano_para_primeiro_impar = self.caminho_euleriano_entre_dois_vertices(primeiro_vertices_impar,
-                                                                                             vertices_impares,
-                                                                                             deepcopy(self.M))
+                                                                                               vertices_impares,
+                                                                                               deepcopy(self.M))
             if caminho_euleriano_para_primeiro_impar is None:
                 segundo_vertice_impar = vertices_impares[-1]
                 caminho_euleriano_para_segundo_impar = self.caminho_euleriano_entre_dois_vertices(segundo_vertice_impar,
-                                                                                                vertices_impares,
-                                                                                                deepcopy(self.M))
+                                                                                                  vertices_impares,
+                                                                                                  deepcopy(self.M))
                 return caminho_euleriano_para_segundo_impar
             else:
                 return caminho_euleriano_para_primeiro_impar
         else:
             return self.caminho_euleriano_para_zero_impares()
+
+    def todos_os_vertices_foram_visitados(self, vertices_visitados):
+        for vertice in self.N:
+            if vertice not in vertices_visitados:
+                return False
+        return True
+        
+    def buscar_ciclo_hamiltoniano(self, vertice, copia_matriz_adjacencia, vertices_visitados=None, ciclo_hamiltoniano=None, numero_aresta=2):
+        if vertices_visitados is None:
+            vertices_visitados = [vertice]
+            ciclo_hamiltoniano = [vertices_visitados, 'a1']
+        if self.todos_os_vertices_foram_visitados(vertices_visitados):
+            return ciclo_hamiltoniano
+        else:
+            posicao_na_lista_de_vertices = self.N.index(vertice)
+            for line_counter in range(len(self.N)):
+                if line_counter == posicao_na_lista_de_vertices:
+                    for column_counter in range(line_counter, len(self.N)):
+                        conexao = self.M[line_counter][column_counter]
+
+                        if conexao > 0:
+                            novo_vertice = self.N[column_counter]
+                            if novo_vertice not in vertices_visitados:
+                                copia_matriz_adjacencia[line_counter][column_counter] -= 1
+                                vertices_visitados.append(novo_vertice)
+                                ciclo_hamiltoniano += [novo_vertice, f"a{numero_aresta}"]
+                                return self.buscar_ciclo_hamiltoniano(novo_vertice)
+
+
+    def ciclo_hamiltoniano(self, copia_matriz_adjacencia, vertices_visitados=None):
+        for vertice in self.N:
+            ciclo_hamiltoniano = self.buscar_ciclo_hamiltoniano(vertice, deepcopy(self.M))
