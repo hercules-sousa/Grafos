@@ -365,11 +365,16 @@ class Grafo:
             if len(vertices_impares) == 2:
                 return vertices_impares
 
+    def checar_se_linha_possui_conexoes(self, linha):
+        for elemento in linha:
+            if elemento > 0:
+                return True
+        return False
+
     def esta_vazia_matriz_de_adjacencia(self, matriz_adjacencia):
-        soma = 0
         for line_counter in range(len(matriz_adjacencia)):
-            soma += sum(matriz_adjacencia[line_counter][line_counter:])
-            if soma > 0:
+            linha_de_conexoes = matriz_adjacencia[line_counter][line_counter:]
+            if self.checar_se_linha_possui_conexoes(linha_de_conexoes):
                 return False
         return True
 
