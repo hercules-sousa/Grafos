@@ -352,6 +352,9 @@ class Grafo:
             if qtd_impares > 2:
                 return -1
 
+        if qtd_impares == 1 and len(self.N) == 1:
+            return 0
+
         if qtd_impares == 1:
             return -1
 
@@ -377,7 +380,6 @@ class Grafo:
             if self.checar_se_linha_possui_conexoes(linha_de_conexoes):
                 return False
         return True
-
 
     def caminho_euleriano_entre_dois_vertices(self,
                                             vertice,

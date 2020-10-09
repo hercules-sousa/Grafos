@@ -26,3 +26,14 @@ print(g_par.caminho_euleriano())
 g_par_invertido = Grafo(list('ABC'))
 g_par_invertido.adiciona_aresta_sem_separador('A B A B A C A C A C A C')
 print(g_par_invertido.caminho_euleriano())
+
+g_laco = Grafo(list('A'))
+g_laco.adiciona_aresta_sem_separador('A A')
+print(g_laco.caminho_euleriano())
+
+g_laco1 = Grafo(list('AB'))
+g_laco1.adiciona_aresta_sem_separador('A A A B B B')
+print(g_laco1.caminho_euleriano())
+
+g_vazio = Grafo()
+print(g_vazio.caminho_euleriano())
