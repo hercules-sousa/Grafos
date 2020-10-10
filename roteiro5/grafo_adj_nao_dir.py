@@ -485,6 +485,11 @@ class Grafo:
         if vertices_visitados is None:
             vertices_visitados = [vertice]
             ciclo_hamiltoniano = [vertice, 'a1']
+        '''
+        if self.todos_os_vertices_foram_visitados(vertices_visitados):
+            if ciclo_hamiltoniano[0] != ciclo_hamiltoniano[-2]:
+                return None
+        '''
         if ciclo_hamiltoniano[0] == ciclo_hamiltoniano[-2] and len(ciclo_hamiltoniano) > 2:
             if self.todos_os_vertices_foram_visitados(vertices_visitados):
                 return ciclo_hamiltoniano
@@ -501,6 +506,7 @@ class Grafo:
                                 copia_matriz_adjacencia[line_counter][column_counter] -= 1
                                 vertices_visitados.append(novo_vertice)
                                 ciclo_hamiltoniano += [novo_vertice, f"a{numero_aresta}"]
+                                numero_aresta += 1
                                 retorno_da_busca_pelo_ciclo = self.buscar_ciclo_hamiltoniano(novo_vertice,
                                                                                              copia_matriz_adjacencia,
                                                                                              vertices_visitados,
@@ -510,6 +516,7 @@ class Grafo:
                                     copia_matriz_adjacencia[line_counter][column_counter] += 1
                                     vertices_visitados.pop()
                                     ciclo_hamiltoniano = ciclo_hamiltoniano[:-2]
+                                    numero_aresta -= 1
                                 else:
                                     return retorno_da_busca_pelo_ciclo
                 else:
@@ -520,6 +527,7 @@ class Grafo:
                             copia_matriz_adjacencia[line_counter][posicao_na_lista_de_vertices] -= 1
                             vertices_visitados.append(novo_vertice)
                             ciclo_hamiltoniano += [novo_vertice, f"a{numero_aresta}"]
+                            numero_aresta += 1
                             retorno_da_busca_pelo_ciclo = self.buscar_ciclo_hamiltoniano(novo_vertice,
                                                                                          copia_matriz_adjacencia,
                                                                                          vertices_visitados,
@@ -529,12 +537,29 @@ class Grafo:
                                 copia_matriz_adjacencia[line_counter][posicao_na_lista_de_vertices] += 1
                                 vertices_visitados.pop()
                                 ciclo_hamiltoniano = ciclo_hamiltoniano[:-2]
+                                numero_aresta -= 1
                             else:
                                 return retorno_da_busca_pelo_ciclo
-
+        vertices_visitados.pop()
+        if len(vertices_visitados) > 0:
+            novo_vertice = vertices_visitados[-1]
+            ciclo_hamiltoniano = ciclo_hamiltoniano[:-2]
+            return self.buscar_ciclo_hamiltoniano(novo_vertice,
+                                                  copia_matriz_adjacencia,
+                                                  vertices_visitados,
+                                                  ciclo_hamiltoniano,
+                                                  numero_aresta)
+        else:
+            return ["Não tem pra onde ir meu consagrado"]
 
     def ciclo_hamiltoniano(self):
+        ciclo_hamiltoniano = self.buscar_ciclo_hamiltoniano("D", deepcopy(self.M))
+        if ciclo_hamiltoniano is not None:
+            print(ciclo_hamiltoniano[:-1])
+        '''
         for vertice in self.N:
             ciclo_hamiltoniano = self.buscar_ciclo_hamiltoniano(vertice, deepcopy(self.M))
             if ciclo_hamiltoniano is not None:
-                return ciclo_hamiltoniano[:-1]
+                print(ciclo_hamiltoniano[:-1])
+        return ['Sem ciclo trouxa trouxa']
+        '''
