@@ -31,9 +31,13 @@ class TestGrafo(unittest.TestCase):
         self.g_p2 = Grafo(list('ABC'))
         self.g_p2.adiciona_aresta_sem_separador('A B A B A C A C A C A C')
 
-        # Prova de que Euler não sabia o que tava fazendo
         self.g_laco = Grafo(list('A'))
         self.g_laco.adiciona_aresta_sem_separador('A A')
+
+
+
+        self.g_laco2 = Grafo (list('B'))
+        self.g_laco2.adiciona_aresta_sem_separador('B B B B B B')
 
     def test_caminho_euleriano(self):
         self.assertEqual(self.grafo_konisberg.caminho_euleriano(), [])
@@ -48,3 +52,4 @@ class TestGrafo(unittest.TestCase):
         self.assertEqual(self.g_p2.caminho_euleriano(), ['A', 'a1', 'B', 'a2', 'A', 'a3', 'C', 'a4', 'A', 'a5', 'C', 'a6', 'A'])
 
         self.assertEqual(self.g_laco.caminho_euleriano(), ['A', 'a1', 'A'])
+        self.assertEqual(self.g_laco2.caminho_euleriano(), ['B', 'a1', 'B', 'a2', 'B', 'a3', 'B'])
