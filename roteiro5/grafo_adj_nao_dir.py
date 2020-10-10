@@ -383,7 +383,7 @@ class Grafo:
 
     def caminho_euleriano_entre_dois_vertices(self,
                                               vertice,
-                                              vertices_impares,
+                                              lista_de_vertices,
                                               copia_matriz_adjacencia,
                                               numero_da_aresta=2,
                                               caminho_euleriano=None):
@@ -393,9 +393,9 @@ class Grafo:
             caminho_euleriano.append("a1")
         if self.esta_vazia_matriz_de_adjacencia(copia_matriz_adjacencia):
             caminho_euleriano = caminho_euleriano[:-1]
-            if caminho_euleriano[0] == vertices_impares[0] and caminho_euleriano[-1] == vertices_impares[-1]:
+            if caminho_euleriano[0] == lista_de_vertices[0] and caminho_euleriano[-1] == lista_de_vertices[-1]:
                 return caminho_euleriano
-            elif caminho_euleriano[0] == vertices_impares[-1] and caminho_euleriano[-1] == vertices_impares[0]:
+            elif caminho_euleriano[0] == lista_de_vertices[-1] and caminho_euleriano[-1] == lista_de_vertices[0]:
                 return caminho_euleriano
             else:
                 return None
@@ -411,7 +411,7 @@ class Grafo:
                             numero_da_aresta += 1
                             return self.caminho_euleriano_entre_dois_vertices(
                                 novo_vertice,
-                                vertices_impares,
+                                lista_de_vertices,
                                 copia_matriz_adjacencia,
                                 numero_da_aresta,
                                 caminho_euleriano)
@@ -424,7 +424,7 @@ class Grafo:
                             numero_da_aresta += 1
                             return self.caminho_euleriano_entre_dois_vertices(
                                 novo_vertice,
-                                vertices_impares,
+                                lista_de_vertices,
                                 copia_matriz_adjacencia,
                                 numero_da_aresta,
                                 caminho_euleriano)
@@ -433,13 +433,13 @@ class Grafo:
     def caminho_euleriano_para_zero_impares(self):
         for i in range(len(self.N)):
             for j in range(i, len(self.N)):
-                lista_vertices_impares = [self.N[i], self.N[j]]
-                caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_vertices_impares[0],
-                                                                                       lista_vertices_impares,
+                lista_de_vertices = [self.N[i], self.N[j]]
+                caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_de_vertices[0],
+                                                                                       lista_de_vertices,
                                                                                        deepcopy(self.M))
                 if caminho_para_zero_impares is None:
-                    caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_vertices_impares[-1],
-                                                                                           lista_vertices_impares,
+                    caminho_para_zero_impares = self.caminho_euleriano_entre_dois_vertices(lista_de_vertices[-1],
+                                                                                           lista_de_vertices,
                                                                                            deepcopy(self.M))
                     if caminho_para_zero_impares is not None:
                         return caminho_para_zero_impares
