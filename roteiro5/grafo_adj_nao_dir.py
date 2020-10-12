@@ -537,6 +537,5 @@ class Grafo:
         for vertice in self.N:
             ciclo_hamiltoniano = self.buscar_ciclo_hamiltoniano(vertice, deepcopy(self.M))
             if ciclo_hamiltoniano is not None:
-                print(ciclo_hamiltoniano)
-                print(self.adicionar_arestas_ao_ciclo_hamiltoniano(ciclo_hamiltoniano))
-        return ['Sem ciclo trouxa trouxa']
+                return self.adicionar_arestas_ao_ciclo_hamiltoniano(ciclo_hamiltoniano)
+        return []
