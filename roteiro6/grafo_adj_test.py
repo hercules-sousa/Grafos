@@ -58,6 +58,33 @@ class TestGrafo(unittest.TestCase):
         for i in ['D-C', 'C-C']:
             self.g_l5.adiciona_aresta(i)
 
+        # Grafos do roteiro 6
+        self.g1 = Grafo(list('ABC'))
+        self.g1.adicionar_arestas_sem_separador('A B A C B C C B')
+
+        self.g2 = Grafo(list('ABCD'))
+        self.g2.adicionar_arestas_sem_separador('A B B C D A')
+
+        self.g3 = Grafo(list('ABCD'))
+        self.g3.adicionar_arestas_sem_separador('A A A B B C C B C C D C')
+
+        self.g4 = Grafo(list('ABCD'))
+        self.g4.adicionar_arestas_sem_separador('A A B B A C C D C D C B')
+
+        self.g5 = Grafo(list('ABC'))
+
+        self.g6 = Grafo(list('ABCD'))
+        self.g6.adicionar_arestas_sem_separador('A B A B C A B C B C D B D C D C')
+
+        self.g7 = Grafo(list('ABCDE'))
+        self.g7.adicionar_arestas_sem_separador('A B B C C D D E E A')
+
+        self.g8 = Grafo(list('ABCDE'))
+        self.g8.adicionar_arestas_sem_separador('A B B C C D D B E B')
+
+        self.g9 = Grafo(list('ABC'))
+        self.g9.adicionar_arestas_sem_separador('A A A B A B A B A B B B B C')
+
     def test_vertices_nao_adjacentes(self):
         self.assertEqual(set(self.g_p.vertices_nao_adjacentes()), set(['J-J', 'J-E', 'J-P', 'J-M', 'J-T', 'J-Z',
                                                                       'C-J', 'C-C', 'C-Z',
@@ -123,3 +150,18 @@ class TestGrafo(unittest.TestCase):
         self.assertFalse(self.g_l3.eh_completo())
         self.assertTrue(self.g_l4.eh_completo())
         self.assertFalse(self.g_l5.eh_completo())
+
+    def test_warshall(self):
+        self.assertEqual(self.g1.warshall(), [[0, 1, 1], [0, 1, 1], [0, 1, 1]])
+        self.assertEqual(self.g2.warshall(), [[0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0], [1, 1, 1, 0]])
+        self.assertEqual(self.g3.warshall(), [[1, 1, 1, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 1, 1, 0]])
+        self.assertEqual(self.g4.warshall(), [[1, 1, 1, 2], [0, 1, 0, 0], [0, 1, 0, 2], [0, 0, 0, 0]])
+        self.assertEqual(self.g5.warshall(), [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        self.assertEqual(self.g6.warshall(), [[1, 2, 2, 0], [1, 2, 2, 0], [1, 2, 2, 0], [1, 2, 2, 0]])
+        self.assertEqual(self.g7.warshall(), [
+            [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]
+        ])
+        self.assertEqual(self.g8.warshall(), [
+            [0, 1, 1, 1, 0], [0, 1, 1, 1, 0], [0, 1, 1, 1, 0], [0, 1, 1, 1, 0], [0, 1, 1, 1, 0]
+        ])
+        self.assertEqual(self.g9.warshall(), [[1, 4, 1], [0, 1, 1], [0, 0, 0]])
