@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class VerticeInvalidoException(Exception):
     pass
 
@@ -231,3 +233,21 @@ class Grafo:
             grafo_str += '\n'
 
         return grafo_str
+
+    def adicionar_arestas_sem_separador(self, arestas_sem_separador):
+        arestas_sem_separador = arestas_sem_separador.split()
+        for vertex_counter in range(len(arestas_sem_separador)):
+            if vertex_counter % 2 == 1:
+                new_edge = arestas_sem_separador[vertex_counter - 1] + self.SEPARADOR_ARESTA + arestas_sem_separador[
+                    vertex_counter]
+                self.adiciona_aresta(new_edge)
+
+    def warshall(self):
+        copia_da_matriz = deepcopy(self.M)
+        for i in range(len(copia_da_matriz)):
+            for j in range(len(copia_da_matriz)):
+                conexao = copia_da_matriz[j][i]
+                if conexao > 0:
+                    for k in range(len(self.M)):
+                        copia_da_matriz[j][k] = max(copia_da_matriz[j][k], copia_da_matriz[i][k])
+        return copia_da_matriz
