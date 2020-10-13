@@ -31,6 +31,9 @@ class TestGrafo(unittest.TestCase):
         self.g_p2 = Grafo(list('ABC'))
         self.g_p2.adiciona_aresta_sem_separador('A B A B A C A C A C A C')
 
+        self.g_p3 = Grafo(list('ABCD'))
+        self.g_p3.adiciona_aresta_sem_separador('A B A B A C A C B D B D D C D C')
+
         self.g_laco = Grafo(list('A'))
         self.g_laco.adiciona_aresta_sem_separador('A A')
 
@@ -57,6 +60,7 @@ class TestGrafo(unittest.TestCase):
 
         self.assertEqual(self.g_p1.caminho_euleriano(), ['A', 'a1', 'B', 'a2', 'A', 'a3', 'B', 'a4', 'A', 'a5', 'C', 'a6', 'A'])
         self.assertEqual(self.g_p2.caminho_euleriano(), ['A', 'a1', 'B', 'a2', 'A', 'a3', 'C', 'a4', 'A', 'a5', 'C', 'a6', 'A'])
+        self.assertEqual(self.g_p3.caminho_euleriano(), ['C', 'a1', 'A', 'a2', 'B', 'a3', 'A', 'a4', 'C', 'a5', 'D', 'a6', 'B', 'a7', 'D', 'a8', 'C'])
 
         self.assertEqual(self.g_laco.caminho_euleriano(), ['A', 'a1', 'A'])
         self.assertEqual(self.g_laco2.caminho_euleriano(), ['B', 'a1', 'B', 'a2', 'B', 'a3', 'B'])
@@ -69,10 +73,8 @@ class TestGrafo(unittest.TestCase):
         self.assertEqual(self.g_i2.ciclo_hamiltoniano(), [])
         self.assertEqual(self.g_i3.ciclo_hamiltoniano(), [])
 
-
         self.assertEqual(self.g_p1.ciclo_hamiltoniano(), [])
         self.assertEqual(self.g_p2.ciclo_hamiltoniano(), [])
-
 
         self.assertEqual(self.g_h1.ciclo_hamiltoniano(), ['A', 'a1', 'B', 'a2', 'C', 'a3', 'A'])
         self.assertEqual(self.g_h2.ciclo_hamiltoniano(), ['B', 'a1', 'C', 'a2', 'A', 'a3', 'E', 'a4', 'D', 'a5', 'B'])
