@@ -607,10 +607,12 @@ class Grafo:
                                 copia_matriz_adjacencia[contador_linha][contador_coluna] = 0
 
                                 resultado = self.menor_caminho_drone(novo_vertice,
+                                                                     destino,
                                                                      carga,
                                                                      carga_maxima,
                                                                      pontos_recarga,
-                                                                     copia_matriz_adjacencia)
+                                                                     copia_matriz_adjacencia,
+                                                                     tabela)
 
                                 if resultado is None :
                                     carga += 1
@@ -619,7 +621,7 @@ class Grafo:
                                     return resultado
 
             conexao = copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista]
-            if conexao > 0:
+            if conexao != "-" and conexao > 0:
                 novo_vertice = self.N[contador_linha]
                 if tabela[raiz]["fi"] == 0:
                     if tabela[raiz]["beta"] < tabela[novo_vertice]["beta"]:
@@ -629,10 +631,12 @@ class Grafo:
                         copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista] = 0
 
                         resultado = self.menor_caminho_drone(novo_vertice,
+                                                             destino,
                                                              carga,
                                                              carga_maxima,
                                                              pontos_recarga,
-                                                             copia_matriz_adjacencia)
+                                                             copia_matriz_adjacencia,
+                                                             tabela)
                         if resultado is None:
                             carga += 1
                             copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista] = 1
@@ -647,7 +651,8 @@ class Grafo:
                                                 carga,
                                                 carga_maxima,
                                                 pontos_recarga,
-                                                copia_matriz_adjacencia)
+                                                copia_matriz_adjacencia,
+                                                tabela)
 
         return []
 
