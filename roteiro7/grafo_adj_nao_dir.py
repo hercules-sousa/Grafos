@@ -541,6 +541,125 @@ class Grafo:
         return []
 
 
+    def checar_se_todos_os_vertices_sao_permanentes(self, tabela):
+        for i in self.N:
+            if tabela[i]["fi"] == 0:
+                return False
+        return True
+
+    def construir_caminho_para_drone(self, origem, destino, tabela):
+        return "caminho construído"
+
+
+    def remover_lacos_paralelas(self, copia_matriz_adjacencia):
+        for i in range(len(copia_matriz_adjacencia)):
+            for j in range(i, len(copia_matriz_adjacencia)):
+                if i == j:
+                    copia_matriz_adjacencia[i][j] = 0
+                else:
+                    if copia_matriz_adjacencia[i][j] > 1:
+                        copia_matriz_adjacencia[i][j] = 1
+        return copia_matriz_adjacencia
+
+    def menor_caminho_drone(self,
+                            raiz,
+                            destino,
+                            carga,
+                            carga_maxima,
+                            pontos_recarga,
+                            copia_matriz_adjacencia=None,
+                            tabela=None):
+
+        if carga == 0 and raiz not in pontos_recarga:
+            return None
+
+        if raiz in pontos_recarga:
+            carga = carga_maxima
+
+        if copia_matriz_adjacencia is None:
+            copia_matriz_adjacencia = deepcopy(self.M)
+            copia_matriz_adjacencia = self.remover_lacos_paralelas(copia_matriz_adjacencia)
+            tabela = dict()
+            for i in  self.N:
+                tabela[i] = {"beta": float("inf"), "fi": 0, "pi": None}
+            tabela[raiz]["beta"] = 0
+            tabela[raiz]["fi"] = 1
+
+        if self.checar_se_todos_os_vertices_sao_permanentes(tabela):
+            if raiz == destino:
+                caminho = self.construir_caminho_para_drone("A", "F", tabela)
+                return caminho
+            return []
+
+        posicao_raiz_na_lista = self.N.index(raiz)
+
+        for contador_linha in range(len(self.N)):
+            if contador_linha == posicao_raiz_na_lista:
+                for contador_coluna in range(contador_linha + 1, len(self.N)):
+                    conexao = copia_matriz_adjacencia[contador_linha][contador_coluna]
+                    if conexao > 0:
+                        novo_vertice = self.N[contador_coluna]
+                        if tabela[novo_vertice]["fi"] == 0:
+                            if tabela[raiz]["beta"] < tabela[novo_vertice]["beta"]:
+                                tabela[novo_vertice]["beta"] = tabela[raiz]["beta"]
+                                tabela[novo_vertice]["pi"] = raiz
+                                carga -= 1
+                                copia_matriz_adjacencia[contador_linha][contador_coluna] = 0
+
+                                resultado = self.menor_caminho_drone(novo_vertice,
+                                                                     carga,
+                                                                     carga_maxima,
+                                                                     pontos_recarga,
+                                                                     copia_matriz_adjacencia)
+
+                                if resultado is None :
+                                    carga += 1
+                                    copia_matriz_adjacencia[contador_linha][contador_coluna] = 1
+                                else:
+                                    return resultado
+
+            conexao = copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista]
+            if conexao > 0:
+                novo_vertice = self.N[contador_linha]
+                if tabela[raiz]["fi"] == 0:
+                    if tabela[raiz]["beta"] < tabela[novo_vertice]["beta"]:
+                        tabela[novo_vertice]["beta"] = tabela[raiz]["beta"]
+                        tabela[novo_vertice]["pi"] = raiz
+                        carga -= 1
+                        copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista] = 0
+
+                        resultado = self.menor_caminho_drone(novo_vertice,
+                                                             carga,
+                                                             carga_maxima,
+                                                             pontos_recarga,
+                                                             copia_matriz_adjacencia)
+                        if resultado is None:
+                            carga += 1
+                            copia_matriz_adjacencia[contador_linha][posicao_raiz_na_lista] = 1
+                        else:
+                            return resultado
+        for vertice in self.N:
+            if tabela[vertice]["fi"] == 0:
+                r_asteristico = vertice
+                novo_vertice = r_asteristico
+                return self.menor_caminho_drone(novo_vertice,
+                                                destino,
+                                                carga,
+                                                carga_maxima,
+                                                pontos_recarga,
+                                                copia_matriz_adjacencia)
+
+        return []
+
+
+
+
+
+
+
+
+
+
     def distancia_minima(self, distancias, pilha_de_vertices):
         minimo = float("inf")
         min_index = -1
@@ -551,8 +670,6 @@ class Grafo:
                 min_index = i
 
         return min_index
-
-
     def exibir_caminho(self, predecessores, j, vertexes):
 
         if predecessores[j] == -1:
@@ -564,7 +681,6 @@ class Grafo:
 
 
     def exibir_solucao(self, distancias, predecessores, vertexes):
-        origem = 0
         for i in range(1, len(distancias)):
             print()
             self.exibir_caminho(predecessores, i, vertexes)
