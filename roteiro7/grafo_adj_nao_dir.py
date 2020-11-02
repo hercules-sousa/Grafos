@@ -737,10 +737,13 @@ class Grafo:
         return lista_vertices_adjacentes_a_raiz
 
     def achar_novo_r_asteristico(self, tabela):
+        v = list()
+
         for vertice in tabela.keys():
             if tabela[vertice]["fi"] == 0:
-                return vertice
-        return None
+                v.append(vertice)
+
+        return v
 
     def construir_caminho(self, raiz, tabela):
         caminho = list()
@@ -758,20 +761,21 @@ class Grafo:
                             copia_matriz_adjacencia=None,
                             tabela=None):
 
-        if carga == 0 and raiz not in pontos_recarga:
-            return None
-
-        if raiz in pontos_recarga:
-            carga = carga_maxima
-
         if copia_matriz_adjacencia is None:
             copia_matriz_adjacencia = deepcopy(self.M)
             copia_matriz_adjacencia = self.remover_lacos_paralelas(copia_matriz_adjacencia)
             tabela = dict()
             for i in self.N:
-                tabela[i] = {"beta": float("inf"), "fi": 0, "pi": None}
+                tabela[i] = {"beta": float("inf"), "fi": 0, "pi": None, "carga": None}
             tabela[raiz]["beta"] = 0
             tabela[raiz]["fi"] = 1
+            tabela[raiz]["carga"] = carga
+
+        if tabela[raiz]["carga"] == 0 and raiz not in pontos_recarga:
+            return None
+
+        if raiz in pontos_recarga:
+            tabela[raiz]["carga"] = carga_maxima
 
         lista_vertices_adjacentes_raiz = self.retornar_vertices_adjacentes_a_raiz(raiz, copia_matriz_adjacencia)
 
@@ -784,34 +788,44 @@ class Grafo:
                     if novo_vertice == destino:
                         r_asteristico = self.achar_novo_r_asteristico(tabela)
 
-                        if r_asteristico is None:
+                        if not r_asteristico:
                             return self.construir_caminho(destino, tabela)
 
-                        tabela[r_asteristico]["fi"] = 1
-                        raiz = r_asteristico
-                        carga -= 1
+                        for r in r_asteristico:
+                            tabela[r]["fi"] = 1
+                            tabela[r]["carga"] = tabela[raiz]["carga"] - 1
+                            temp = r
 
-                        return self.menor_caminho_drone(raiz,
-                                                        destino,
-                                                        carga,
-                                                        carga_maxima,
-                                                        pontos_recarga,
-                                                        copia_matriz_adjacencia,
-                                                        tabela)
+                            result = self.menor_caminho_drone(temp,
+                                                              destino,
+                                                              tabela[raiz]["carga"],
+                                                              carga_maxima,
+                                                              pontos_recarga,
+                                                              copia_matriz_adjacencia,
+                                                              tabela)
+
+                            if result is not None:
+                                return result
 
         r_asteristico = self.achar_novo_r_asteristico(tabela)
 
-        if r_asteristico is None:
+        if not r_asteristico:
             return self.construir_caminho(destino, tabela)
 
-        tabela[r_asteristico]["fi"] = 1
-        raiz = r_asteristico
-        carga -= 1
+        for r in r_asteristico:
+            tabela[r]["fi"] = 1
+            tabela[r]["carga"] = tabela[raiz]["carga"] - 1
+            temp = r
 
-        return self.menor_caminho_drone(raiz,
-                                        destino,
-                                        carga,
-                                        carga_maxima,
-                                        pontos_recarga,
-                                        copia_matriz_adjacencia,
-                                        tabela)
+            result = self.menor_caminho_drone(temp,
+                                              destino,
+                                              tabela[raiz]["carga"],
+                                              carga_maxima,
+                                              pontos_recarga,
+                                              copia_matriz_adjacencia,
+                                              tabela)
+
+            if result is not None:
+                return result
+
+        return 'Xablau'
