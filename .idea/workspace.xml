@@ -19,9 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="959166c9-a2a3-422c-86ac-251285514168" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Roteiro3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Roteiro3.py" afterDir="false" />
-    </list>
+    <list default="true" id="959166c9-a2a3-422c-86ac-251285514168" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +42,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/roteiro7" />
   </component>
   <component name="RunManager" selected="Python tests.Unittests for Roteiro3_test.Roteiro3">
     <configuration name="refactoring" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -185,9 +183,14 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl" timestamp="1598717337231">
-      <screen x="67" y="27" width="1299" height="741" />
+    <state x="329" y="165" width="612" height="384" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604335178320">
+      <screen x="0" y="0" width="1280" height="720" />
     </state>
+    <state x="329" y="165" width="612" height="384" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1604335178320" />
+    <state x="426" y="123" width="424" height="484" key="FileChooserDialogImpl" timestamp="1604335344191">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="426" y="123" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1604335344191" />
     <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1598717337231" />
     <state width="1276" height="65" key="GridCell.Tab.0.bottom" timestamp="1598718799445">
       <screen x="67" y="27" width="1299" height="741" />
@@ -221,5 +224,16 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state width="1276" height="65" key="GridCell.Tab.1.right/67.27.1299.741@67.27.1299.741" timestamp="1598718799456" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/roteiro7/grafo_adj_nao_dir.py</url>
+          <line>563</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
