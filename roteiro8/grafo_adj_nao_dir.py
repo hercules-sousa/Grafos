@@ -719,3 +719,70 @@ class Grafo:
                 pilha.append(menor_vertice)
 
         return resultado
+    
+    def obter_valor_arestas(self):
+        valor_arestas = list()
+        for i in range(len(self.N)):
+            for j in range (i + 1, len(self.N)):
+                if self.M[i][j] > 0:
+                    valor_arestas.append(self.M[i][j])
+        return valor_arestas
+
+    def encontrar_aresta(self, valor):
+        aresta = str()
+        for i in range(len(self.N)):
+            for j in range (i + 1, len(self.N)):
+                if self.M[i][j] == valor:
+                    aresta = f"{self.N[i]}-{self.N[j]}"
+        return aresta
+
+    def union(self, pais, i, j): 
+        a = self.find(pais, i) 
+        b = self.find(pais, j) 
+        pais[a] = b
+        return pais
+
+    def find(self, pais, i): 
+        while pais[i] != i: 
+            i = pais[i] 
+        return i
+
+    def kruskal_modificado(self):
+        minimun_spanning_tree = list()
+        pais = dict()
+        
+        for vertice in self.N:
+            pais[vertice] = vertice
+        
+        contagem_de_arestas = 0
+
+        while contagem_de_arestas < len(self.N) - 1:
+            minino = float("Inf")
+            vertice1, vertice2 = str(), str()
+            for i in range(len(self.N)):
+                for j in range(1 + i, len(self.N)):
+                    if self.find(pais, self.N[i]) != self.find(pais, self.N[j]):
+                        if 0 < self.M[i][j] < minino:
+                            minino = self.M[i][j]
+                            vertice1, vertice2 = self.N[i], self.N[j]
+
+            pais = self.union(pais, vertice1, vertice2)
+            minimun_spanning_tree.append(f"{vertice1}-{vertice2}")
+            contagem_de_arestas += 1
+        return minimun_spanning_tree
+
+    '''
+    def kruskal_modificado(self):
+        t = Grafo()
+        
+        j = 0
+        h = dict()
+        h[j] = set()
+
+        fila_prioridade = self.obter_valor_arestas()
+        fila_prioridade.sort()
+
+        while len(t.N) < len(self.N) - 1:
+            j = fila_prioridade[0]
+            aresta = self.encontrar_aresta(j)
+    '''

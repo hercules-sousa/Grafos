@@ -1,12 +1,12 @@
 from grafo_adj_nao_dir import Grafo
 
-g = Grafo(list("ABCDEF"))
+g = Grafo(list("ABCDE"))
 
-arestas = 'A-B A-C C-D C-E D-E E-F'.split()
-pesos = [2, 3, 5, 1, 2, 2]
+arestas = 'A-C A-B B-E A-D B-D D-E'.split()
+pesos = [5, 3, 3, 2, 3, 5]
 
 for a, p in zip(arestas, pesos):
     g.adicionaArestaComPeso(a, p)
 
 print(g)
-print(g.prim_modificado('C'))
+print(g.kruskal_modificado())
