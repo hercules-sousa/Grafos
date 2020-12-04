@@ -197,6 +197,12 @@ class Grafo:
         else:
             raise VerticeInvalidoException('O vértice ' + v + ' é inválido')
 
+    def adiciona_arestas_com_pesos(self, lista_arestas_pesos):
+        lista_arestas_pesos = lista_arestas_pesos.split()
+        for i in range(1, len(lista_arestas_pesos), 2):
+            self.adicionaArestaComPeso(lista_arestas_pesos[i - 1], int(lista_arestas_pesos[i]))
+
+
     def adicionaArestaComPeso(self, a, peso):
         '''
         Adiciona uma aresta ao grafo no formato X-Y, onde X é o primeiro vértice e Y é o segundo vértice
@@ -651,6 +657,7 @@ class Grafo:
         while queue:
             menor_peso = float('inf')
             menor_vertice = str()
+
 
             for i in queue:
                 if pesos_minimos[i] < menor_peso:
