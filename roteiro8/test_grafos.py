@@ -32,7 +32,7 @@ class TesteFuncoes(unittest.TestCase):
         self.g8.adiciona_arestas_com_pesos("A-C 1 A-B 90 B-C 200 B-D 30 A-D 70")
 
     def test_prim_modificado(self):
-        # Grafo1
+        # Grafo 1
         self.assertEqual(self.g1.prim_modificado("A"), ['A-B', 'B-F', 'F-H', 'H-D', 'F-G', 'A-C', 'C-E'])
         self.assertEqual(self.g1.prim_modificado("G"), ['G-F', 'F-B', 'B-A', 'B-C', 'C-E', 'F-H', 'H-D'])
         self.assertEqual(self.g1.prim_modificado("C"), ['C-E', 'C-A', 'A-B', 'B-F', 'F-H', 'H-D', 'F-G'])
@@ -43,49 +43,15 @@ class TesteFuncoes(unittest.TestCase):
         self.assertEqual(self.g2.prim_modificado("D"), ['D-A', 'A-B', 'D-C', 'C-E', 'E-F', 'F-G', 'G-H'])
 
         # Grafo 3
-        self.assertEqual(self.g3.prim_modificado("E"), ['E-B',
-                                                        'B-A',
-                                                        'A-C',
-                                                        'C-G',
-                                                        'G-N',
-                                                        'G-O',
-                                                        'C-F',
-                                                        'F-L',
-                                                        'F-M',
-                                                        'B-D',
-                                                        'D-I',
-                                                        'D-H',
-                                                        'E-K',
-                                                        'E-J'])
-        self.assertEqual(self.g3.prim_modificado("H"), ['H-D',
-                                                        'D-I',
-                                                        'D-B',
-                                                        'B-A',
-                                                        'A-C',
-                                                        'C-G',
-                                                        'G-N',
-                                                        'G-O',
-                                                        'C-F',
-                                                        'F-L',
-                                                        'F-M',
-                                                        'B-E',
-                                                        'E-K',
-                                                        'E-J'])
-        self.assertEqual(self.g3.prim_modificado("M"), ['M-F',
-                                                        'F-L',
-                                                        'F-C',
-                                                        'C-G',
-                                                        'G-N',
-                                                        'G-O',
-                                                        'C-A',
-                                                        'A-B',
-                                                        'B-D',
-                                                        'D-I',
-                                                        'D-H',
-                                                        'B-E',
-                                                        'E-K',
-                                                        'E-J']
-                         )
+        self.assertEqual(self.g3.prim_modificado("E"), [
+            'E-B', 'B-A', 'A-C', 'C-G', 'G-N', 'G-O', 'C-F', 'F-L', 'F-M', 'B-D', 'D-I', 'D-H', 'E-K', 'E-J'
+        ])
+        self.assertEqual(self.g3.prim_modificado("H"), [
+            'H-D', 'D-I', 'D-B', 'B-A', 'A-C', 'C-G', 'G-N', 'G-O', 'C-F', 'F-L', 'F-M', 'B-E', 'E-K', 'E-J'
+        ])
+        self.assertEqual(self.g3.prim_modificado("M"), [
+            'M-F', 'F-L', 'F-C', 'C-G', 'G-N', 'G-O', 'C-A', 'A-B', 'B-D', 'D-I', 'D-H', 'B-E', 'E-K', 'E-J'
+        ])
 
         # Grafo 4
         self.assertEqual(self.g4.prim_modificado("A"), ['A-D', 'D-E', 'E-B', 'B-C', 'E-F', 'F-I', 'E-H', 'H-G'])
@@ -110,4 +76,31 @@ class TesteFuncoes(unittest.TestCase):
         # Grafo 8
         self.assertEqual(self.g8.prim_modificado("A"), ['A-C', 'A-D', 'D-B'])
         self.assertEqual(self.g8.prim_modificado("D"), ['D-B', 'D-A', 'A-C'])
+
+    def test_kruskal_modificado(self):
+        # Grafo 1
+        self.assertEqual(self.g1.kruskal_modificado(), ['B-F', 'C-E', 'D-H', 'F-H', 'A-B', 'F-G', 'A-C'])
+
+        # Grafo 2
+        self.assertEqual(self.g2.kruskal_modificado(), ['A-D', 'C-D', 'C-E', 'F-G', 'G-H', 'A-B', 'E-F'])
+
+        # Grafo 3
+        self.assertEqual(self.g3.kruskal_modificado(), [
+            'A-B', 'C-G', 'F-L', 'A-C', 'D-I', 'F-M', 'B-D', 'D-H', 'G-N', 'B-E', 'E-K', 'G-O', 'C-F', 'E-J'
+        ])
+
+        # Grafo 4
+        self.assertEqual(self.g4.kruskal_modificado(), ['A-D', 'B-C', 'F-I', 'G-H', 'B-E', 'D-E', 'E-F', 'E-H'])
+
+        # Grafo 5
+        self.assertEqual(self.g5.kruskal_modificado(), ['A-F', 'D-E', 'E-F', 'A-B', 'A-C'])
+
+        # Grafo 6
+        self.assertEqual(self.g6.kruskal_modificado(), ['A-B', 'B-C', 'A-D', 'D-E', 'E-F', 'E-G'])
+
+        # Grafo 7
+        self.assertEqual(self.g7.kruskal_modificado(), ['A-G', 'D-E', 'C-F', 'D-G', 'B-G', 'C-G'])
+
+        # Grafo 8
+        self.assertEqual(self.g8.kruskal_modificado(), ['A-C', 'B-D', 'A-D'])
 
