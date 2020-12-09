@@ -777,19 +777,3 @@ class Grafo:
             minimun_spanning_tree.append(f"{vertice1}-{vertice2}")
             contagem_de_arestas += 1
         return minimun_spanning_tree
-
-    '''
-    def kruskal_modificado(self):
-        t = Grafo()
-        
-        j = 0
-        h = dict()
-        h[j] = set()
-
-        fila_prioridade = self.obter_valor_arestas()
-        fila_prioridade.sort()
-
-        while len(t.N) < len(self.N) - 1:
-            j = fila_prioridade[0]
-            aresta = self.encontrar_aresta(j)
-    '''

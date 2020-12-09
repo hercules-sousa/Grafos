@@ -5,7 +5,6 @@ import unittest
 
 from grafo_adj_nao_dir import Grafo
 
-
 class TesteGrafo(unittest.TestCase):
     def setUp(self):
         self.g1 = Grafo(list('ABCDE'))
